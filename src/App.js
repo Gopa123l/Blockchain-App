@@ -13,62 +13,43 @@ const App = () => {
   const [currentWeb3, setCurrentWeb3]=useState(new Web3('https://rpc.linea.build/'))
 
 
-  const getNativeTokenBalanceAtSpecificBlock = async (contractAddress, rpcEndpoint, hoursBefore) => {
-    try {
-      const currentBlock = await rpcEndpoint.eth.getBlockNumber();
-      console.log("current block", currentBlock);
+//   const getNativeTokenBalanceAtSpecificBlock = async (contractAddress, rpcEndpoint, hoursBefore) => {
+//     try {
+//       const currentBlock = await rpcEndpoint.eth.getBlockNumber();
+//       console.log("current block", currentBlock);
     
-      const secondsInHour = 3600;
-      const blocksPerSecond = 5;
+//       const secondsInHour = 3600;
+//       const blocksPerSecond = 5;
     
-      const hoursBeforeBigInt = BigInt(hoursBefore);
-      const blocksBefore = hoursBeforeBigInt * BigInt(secondsInHour) * BigInt(blocksPerSecond);
+//       const hoursBeforeBigInt = BigInt(hoursBefore);
+//       const blocksBefore = hoursBeforeBigInt * BigInt(secondsInHour) * BigInt(blocksPerSecond);
     
-      const blockNumber = currentBlock - Number(blocksBefore); // Convert BigInt to regular number
+//       const blockNumber = currentBlock - Number(blocksBefore); // Convert BigInt to regular number
     
-      const balanceWei = await rpcEndpoint.eth.getBalance(contractAddress, blockNumber);
-      const balanceEther = rpcEndpoint.utils.fromWei(balanceWei, 'ether');
-      return parseFloat(balanceEther);
-    } catch (error) {
-      console.error('Error fetching balance:', error);
-      // Handle the error as needed
-    }
+//       const balanceWei = await rpcEndpoint.eth.getBalance(contractAddress, blockNumber);
+//       const balanceEther = rpcEndpoint.utils.fromWei(balanceWei, 'ether');
+//       return parseFloat(balanceEther);
+//     } catch (error) {
+//       console.error('Error fetching balance:', error);
+//       // Handle the error as needed
+//     }
     
-};
+// };
 
   const getNativeTokenBalanceOfMantle = async () => {
-    try {
-      // const kroma = new Web3('https://api.kroma.network');
-      // const linea = new Web3('https://rpc.linea.build/');
-      // const mantle = new Web3('https://rpc.mantle.xyz/');
+    try {      
       const balanceWei = await currentWeb3.eth.getBalance(currentAddress);
       const balanceEther = currentWeb3.utils.fromWei(balanceWei, 'ether');
       console.log(balanceEther);
-      setNativeTokenBalance(parseFloat(balanceEther));
-      // const nativeTokenBalance12HoursBefore = await getNativeTokenBalanceAtSpecificBlock(currentAddress, currentWeb3, 12);
-      // setNativeTokenBalanceBefore(nativeTokenBalance12HoursBefore);
+      setNativeTokenBalance(parseFloat(balanceEther));      
     } catch (error) {
       console.error('Error fetching balance:', error);
       throw error;
     }
   };
-  const getNativeTokenBalancebefore = async () => {
-    try {
-      // const kroma = new Web3('https://api.kroma.network');
-      // const linea = new Web3('https://rpc.linea.build/');
-      // const mantle = new Web3('https://rpc.mantle.xyz/');
-      
-      const nativeTokenBalance12HoursBefore = await getNativeTokenBalanceAtSpecificBlock(currentAddress, currentWeb3, 12);
-      setNativeTokenBalanceBefore(nativeTokenBalance12HoursBefore);
-    } catch (error) {
-      console.error('Error fetching balance:', error);
-      throw error;
-    }
-  };
+ 
   const handleSubmit= ()=>{
-    getNativeTokenBalanceOfMantle();
-    getNativeTokenBalancebefore();
-    console.log(nativeTokenBalanceBefore)
+    getNativeTokenBalanceOfMantle();       
   }
 
   const handleRadioButtonClick = (value) => {
@@ -91,35 +72,32 @@ const App = () => {
   
 
 
-  // Add more functions for other networks if needed
+  
   const radioGroupStyle = {
     display: 'flex',
-    flexDirection: 'row', // Set the direction to horizontal
+    flexDirection: 'row', 
     alignItems: 'center',
     padding:'30px',
-    gap:'10px'
-     // Align items in the center vertically
+    gap:'10px'     
   };
-
-  // useEffect(() => {
-  //   getNativeTokenBalanceOfMantle(); // You can call other functions here if needed
-  // }, []); // This effect runs once when the component mounts
+  
 
   return (
-    <div>
-      <h1>My React Blockchain App</h1>
+    <div style={{ background: 'linear-gradient(180deg, #000000 0%, #1a1a1a 100%)' , height:"100vh"}}>
+      <h1 style={{ color: 'white', fontFamily: 'ProximaNovaBold', fontSize: '24px' }}>Fetch Native Tokens</h1>
       <div>
       <RadioGroup style={radioGroupStyle} onChange={(value) => handleRadioButtonClick(value)}>
-  <RadioButton value="Linea">
+  <RadioButton value="Linea" style={{ color: 'white' }}>
     Linea
   </RadioButton>
-  <RadioButton value="Mantle">
+  <RadioButton value="Mantle" style={{ color: 'white' }}>
     Mantle
   </RadioButton>
-  <RadioButton value="Kroma">
+  <RadioButton value="Kroma" style={{ color: 'white' }}>
     Kroma
   </RadioButton>
 </RadioGroup>
+
 
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent:"center", cursor:"pointer" }}>
@@ -128,16 +106,16 @@ const App = () => {
   </div>
 </div>
 
-      {nativeTokenBalance !== null  ? (
-        <p>Native Token Balance: {nativeTokenBalance.toFixed(18)}  MNT</p>
+      {nativeTokenBalance !== null  && (
+      <p style={{ color: 'white', fontFamily: 'ProximaNovaBold', fontSize: '20px' }}>
+      Native Token Balance: {nativeTokenBalance.toFixed(18)} units
+    </p>
+    
        
        
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );
 };
 
 export default App;
-//Native Token Balance: {nativeTokenBalanceBefore.toFixed(18)

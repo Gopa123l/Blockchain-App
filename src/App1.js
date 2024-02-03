@@ -19,6 +19,7 @@ const getNativeTokenBalanceAtSpecificBlock = async (contractAddress, rpcEndpoint
         const blocksPerSecond = 5; 
         const blocksBefore = BigInt(hoursBefore) * BigInt(secondsInHour) * BigInt(blocksPerSecond);
         const blockNumber = currentBlock - blocksBefore;
+
         const balanceWei = await web3.eth.getBalance(contractAddress, blockNumber);
         const balanceEther = web3.utils.fromWei(balanceWei, 'ether');
         return parseFloat(balanceEther);
@@ -27,6 +28,7 @@ const getNativeTokenBalanceAtSpecificBlock = async (contractAddress, rpcEndpoint
         throw error;
     }
 };
+
 (async () => {
     try {
         const contractAddress = '0xDCBc586cAb42a1D193CaCD165a81E5fbd9B428d7';

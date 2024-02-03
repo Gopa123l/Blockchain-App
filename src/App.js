@@ -13,29 +13,6 @@ const App = () => {
   const [currentWeb3, setCurrentWeb3]=useState(new Web3('https://rpc.linea.build/'))
 
 
-//   const getNativeTokenBalanceAtSpecificBlock = async (contractAddress, rpcEndpoint, hoursBefore) => {
-//     try {
-//       const currentBlock = await rpcEndpoint.eth.getBlockNumber();
-//       console.log("current block", currentBlock);
-    
-//       const secondsInHour = 3600;
-//       const blocksPerSecond = 5;
-    
-//       const hoursBeforeBigInt = BigInt(hoursBefore);
-//       const blocksBefore = hoursBeforeBigInt * BigInt(secondsInHour) * BigInt(blocksPerSecond);
-    
-//       const blockNumber = currentBlock - Number(blocksBefore); // Convert BigInt to regular number
-    
-//       const balanceWei = await rpcEndpoint.eth.getBalance(contractAddress, blockNumber);
-//       const balanceEther = rpcEndpoint.utils.fromWei(balanceWei, 'ether');
-//       return parseFloat(balanceEther);
-//     } catch (error) {
-//       console.error('Error fetching balance:', error);
-//       // Handle the error as needed
-//     }
-    
-// };
-
   const getNativeTokenBalanceOfMantle = async () => {
     try {      
       const balanceWei = await currentWeb3.eth.getBalance(currentAddress);
